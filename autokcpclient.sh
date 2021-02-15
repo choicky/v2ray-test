@@ -1,15 +1,15 @@
 #!/bin/bash
-PORT=26158  #SSH port
+PORT=4588  #SSH port
 TTIINIT=20
 UPLINKCAPINIT=1
-MAXTTI=20
-MAXUPLINK=2
+MAXTTI=80
+MAXUPLINK=20
 
-IP=`jq .outbound.settings.vnext[0].address /etc/v2ray/config.json|sed "s/\"//g"` # server address
-PROXY=`jq .inbound.protocol /etc/v2ray/config.json|sed "s/\"//g"`
-PROXYPORT=`jq .inbound.port /etc/v2ray/config.json`
+IP=`jq .outbound.settings.vnext[0].address /usr/local/etc/xray/config.json|sed "s/\"//g"` # server address
+PROXY=`jq .inbound.protocol /usr/local/etc/xray/config.json|sed "s/\"//g"`
+PROXYPORT=`jq .inbound.port /usr/local/etc/xray/config.json`
 PROXY=$PROXY://127.0.0.1:$PROXYPORT
-DOWNLOAD_LINK="http://www.dvlnx.com/software/gnu/denemo/denemo-2.0.8.tar.gz"
+DOWNLOAD_LINK="https://lax-ca-us-ping.vultr.com/vultr.com.100MB.bin"
 
 # configure ssh connection reusing
 SSHCONFIG="${HOME}/.ssh/config"
