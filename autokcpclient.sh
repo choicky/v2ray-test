@@ -1,13 +1,13 @@
 #!/bin/bash
 PORT=4588  #SSH port
 TTIINIT=20
-UPLINKCAPINIT=1
+UPLINKCAPINIT=2
 MAXTTI=80
-MAXUPLINK=20
+MAXUPLINK=60
 
-IP=`jq .outbound.settings.vnext[0].address /usr/local/etc/xray/config.json|sed "s/\"//g"` # server address
-PROXY=`jq .inbound.protocol /usr/local/etc/xray/config.json|sed "s/\"//g"`
-PROXYPORT=`jq .inbound.port /usr/local/etc/xray/config.json`
+IP=`jq .outbounds[0].settings.vnext[0].address /usr/local/etc/xray/config.json|sed "s/\"//g"` # server address
+PROXY=`jq .inbounds[0].protocol /usr/local/etc/xray/config.json|sed "s/\"//g"`
+PROXYPORT=`jq .inbounds[0].port /usr/local/etc/xray/config.json`
 PROXY=$PROXY://127.0.0.1:$PROXYPORT
 DOWNLOAD_LINK="https://lax-ca-us-ping.vultr.com/vultr.com.100MB.bin"
 
@@ -31,7 +31,7 @@ elif [[ 1 ]]; then
 fi
 
 ssh -MNf -p $PORT root@$IP  2>/dev/null \
-    && ssh -p $PORT -t root@$IP "echo "tti uplinkCap serverReceive serverReceive">serverresult.txt" 2>/dev/null
+    && ssh -p $PORT -t root@$IP "echo "tti uplinkCap serverReceive serverTransmit">serverresult.txt" 2>/dev/null
 echo -n "Testing..."
 echo "filezise speed">clientresult.txt
 for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
